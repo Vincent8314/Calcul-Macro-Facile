@@ -5,261 +5,260 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Calcul du taux de masse grasse et dépense énergétique journalière</title>
     <style>
-        /* Styles généraux pour le corps de la page */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #DCD6F7;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-    
-        /* Conteneur principal */
-        .container-wrapper {
-            width: 100%;
-            max-width: 700px;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-    
-        /* Conteneur général pour les sections */
-        .container {
-            border: 1px solid #A6B1E1;
-            background-color: #F4EEFF;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 5px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
-            width: 100%;
-            box-sizing: border-box;
-        }
-    
-        /* Conteneur spécifique */
-        .container1 {
-            border: 1px solid #A6B1E1;
-            background-color: #F4EEFF;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 5px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
-            width: 100%;              /* Utilisez 100% pour s'adapter à la taille */
-            max-width: 700px;          /* Limitez la largeur maximale */
-            box-sizing: border-box;    /* Ajustement pour tout inclure */
-            text-align: center;
-        }
-    
-        /* Style des titres */
-        h1, h2 {
-            text-align: center;
-            color: #424874;
-            margin-bottom: 20px;
-        }
-    
-        /* Style des labels */
-        label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-            color: #424874;
-        }
-    
-        /* Groupes d'options */
-        .radio-group, .activity-group {
-            margin: 10px 0;
-        }
-    
-        /* Style des boutons radio */
-        input[type="radio"] {
-            margin-right: 5px;
-        }
-    
-        /* Style des champs de saisie et des listes déroulantes */
-        input[type="number"], select {
-            font-size: 1em; /* Ajustez ici la taille du texte */
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border-radius: 5px;
-            border: 2px solid #A6B1E1;
-            box-sizing: border-box;
-            background-color: #F4EEFF;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-    
-        /* Effet focus */
-        input[type="number"]:focus, select:focus {
-            outline: none;
-            border-color: #424874;
-            box-shadow: 0 0 5px rgba(66, 72, 116, 0.3);
-        }
-    
-        /* Style des boutons */
-        button {
-            font-size: 1.1em;
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #A6B1E1;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease;
-        }
-    
-        /* Effet sur les boutons */
-        button:hover {
-            background-color: #424874;
-        }
-    
-        /* Style des résultats */
-        .result {
-            margin-top: 20px;
-            font-weight: bold;
-            background-color: #F4EEFF;
-            padding: 15px;
-            border-radius: 5px;
-            text-align: left;
-            border: 1px solid #A6B1E1;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
-        }
-    
-        /* Mise en évidence des calories */
-        .calories-highlight {
-            color: #A6B1E1;
-            font-weight: bold;
-        }
-    
-        /* Alignement des cartes de résultat */
-        .result-row {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-top: 20px;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-    
-        /* Style des cartes de résultat */
-        .result-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            width: 100px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            margin-bottom: 15px;
-        }
-    
-        .result-card:hover {
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-        }
-    
-        /* Style des images dans les cartes */
-        .result-card img {
-            width: 30px;
-            height: 30px;
-            margin-bottom: 10px;
-        }
-    
-        .result-card h3, .result-card p {
-            margin: 0;
-            font-size: 0.9em; /* Taille plus petite pour la cohérence */
-            color: #424874;
-        }
-    
-        .error {
-            color: red;
-            margin-top: 10px;
-            text-align: center;
-        }
-    
-        /* Styles pour les textes explicatifs */
-        .explicatif {
-            font-size: 0.9em; /* Taille réduite */
-            color: #666666;
-            margin: 5px 0 10px 30px; /* Marges adaptées */
-        }
-    
-        /* Styles réactifs pour petits écrans */
-        @media (max-width: 600px) {
-            .container1 {
-                max-width: 100%;      /* S'adapte à la largeur de l'écran pour les petits appareils */
-                padding: 15px;        /* Réduction du padding */
-                margin: 15px 0;       /* Moins d'espacement en bas */
-            }
-            h1 {
-                font-size: 1.4em;
-            }
-            .result-card {
-                width: 80px;
-                padding: 8px;
-            }
-            button {
-                padding: 10px;
-            }
-        }
-            .placeholder {
-                color: rgba(100, 100, 100, 0.5);  /* Couleur gris clair translucide */
-                font-style: italic;  /* Style italique */
-                text-align: center;
-            }
+       /* Styles généraux pour le corps de la page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #DCD6F7;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-size: 16px; /* Taille de base */
+}
 
-            /* Style pour masquer le placeholder quand il y a du contenu */
-            .result span.placeholder {
-                display: block;
-            }
+/* Conteneur principal */
+.container-wrapper {
+    width: 95%;
+    max-width: 900px;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
-            .result:empty::before {
-                content: "Résultat ici";
-                font-style: italic;
-                color: rgba(100, 100, 100, 0.5);
-            }
-         /* Conteneur personnalisé pour ajuster l'espacement */
-            .tdee-section {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                margin-top: 15px;
-                margin-bottom: 15px;
-            }
+/* Conteneur général pour les sections */
+.container, .container1 {
+    border: 1px solid #A6B1E1;
+    background-color: #F4EEFF;
+    padding: 1.25rem;
+    margin-bottom: 1.875rem;
+    border-radius: 0.3125rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    box-sizing: border-box;
+}
 
-            /* Bouton TDEE avec marge ajustée */
-            #calculTDEEButton {
-                margin-top: 0px; /* Réduction de la marge supérieure */
-                margin-bottom: 10px; /* Ajustement de la marge inférieure */
-                padding: 12px 20px; /* Augmentation de la taille */
-                width: auto;
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-            }
+/* Titres principaux */
+h1, h2 {
+    text-align: center;
+    color: #424874;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
 
-            /* Ajustement de la zone de résultat */
-            #resultTDEE {
-                margin-top: 20px;
-                margin-bottom: 20px;
-                padding: 15px;
-                border: 1px dashed #A6B1E1;
-                background-color: #F4EEFF;
-                text-align: center;
-                border-radius: 5px;
-                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-                width: 60%; /* Réduction de la largeur */
-                margin-left: auto;
-                margin-right: auto;
-            }
+/* Style des labels */
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #424874;
+    font-size: 1.1rem;
+}
+
+/* Groupes de boutons radio */
+.radio-group, .activity-group {
+    margin: 10px 0;
+}
+
+/* Style des boutons radio */
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Champs de saisie et listes déroulantes */
+input[type="number"], select {
+    font-size: 1rem;
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 2px solid #A6B1E1;
+    box-sizing: border-box;
+    background-color: #F4EEFF;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Effet focus sur les champs */
+input[type="number"]:focus, select:focus {
+    outline: none;
+    border-color: #424874;
+    box-shadow: 0 0 5px rgba(66, 72, 116, 0.3);
+}
+
+/* Style des boutons */
+button {
+    font-size: 1.1rem;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #A6B1E1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+/* Effet hover sur les boutons */
+button:hover {
+    background-color: #424874;
+}
+
+/* Style des résultats */
+.result {
+    margin-top: 20px;
+    font-weight: bold;
+    background-color: #F4EEFF;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: left;
+    border: 1px solid #A6B1E1;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Mise en évidence des calories */
+.calories-highlight {
+    color: #A6B1E1;
+    font-weight: bold;
+}
+
+/* Cartes de résultats */
+.result-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Cartes individuelles */
+.result-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 100px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.result-card:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Images dans les cartes */
+.result-card img {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+/* Textes dans les cartes */
+.result-card h3, .result-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #424874;
+}
+
+/* Styles des messages d'erreur */
+.error {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Styles explicatifs */
+.explicatif {
+    font-size: 0.9rem;
+    color: #666666;
+    margin: 5px 0 10px 30px;
+}
+
+/* Mise en page adaptative pour petits écrans */
+@media (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+    .container, .container1 {
+        max-width: 100%;
+        padding: 15px;
+        margin: 15px 0;
+    }
+    h1 {
+        font-size: 1.4rem;
+    }
+    .result-card {
+        width: 80px;
+        padding: 8px;
+    }
+    button {
+        padding: 10px;
+    }
+    .result {
+        font-size: 1rem;
+    }
+}
+
+/* Placeholders */
+.placeholder {
+    color: rgba(100, 100, 100, 0.5);
+    font-style: italic;
+    text-align: center;
+}
+
+/* Masquer les placeholders si le contenu est présent */
+.result span.placeholder {
+    display: block;
+}
+
+.result:empty::before {
+    content: "Résultat ici";
+    font-style: italic;
+    color: rgba(100, 100, 100, 0.5);
+}
+
+/* TDEE personnalisé */
+.tdee-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#calculTDEEButton {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    padding: 12px 20px;
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#resultTDEE {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px dashed #A6B1E1;
+    background-color: #F4EEFF;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
     </style>    
 </head>
 <body>
