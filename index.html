@@ -5,256 +5,243 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Calcul du taux de masse grasse et dépense énergétique journalière</title>
     <style>
-/* Styles généraux pour le corps de la page */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #DCD6F7;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    min-height: 100vh;
-    overflow-x: hidden;
-}
+        /* Taille de police de base */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #DCD6F7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-size: 16px; /* Taille de référence de base */
+        }
 
-/* Conteneur principal */
-.container-wrapper {
-    width: 100%;
-    max-width: 700px;
-    padding: 20px;
-    box-sizing: border-box;
-}
+        /* Conteneur principal */
+        .container-wrapper {
+            width: 100%;
+            max-width: 700px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
 
-/* Conteneur général pour les sections */
-.container, .container1 {
-    border: 1px solid #A6B1E1;
-    background-color: #F4EEFF;
-    padding: 20px;
-    margin-bottom: 30px;
-    border-radius: 5px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
-    width: 100%;
-    box-sizing: border-box;
-}
+        /* Conteneur général */
+        .container, .container1 {
+            border: 1px solid #A6B1E1;
+            background-color: #F4EEFF;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            box-sizing: border-box;
+        }
 
-/* Style des titres */
-h1, h2 {
-    text-align: center;
-    color: #424874;
-    margin-bottom: 20px;
-}
+        /* Titres */
+        h1, h2 {
+            text-align: center;
+            color: #424874;
+            margin-bottom: 20px;
+        }
 
-/* Style des labels */
-label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
-    color: #424874;
-}
+        /* Labels */
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #424874;
+        }
 
-/* Groupes d'options */
-.radio-group, .activity-group {
-    margin: 10px 0;
-}
+        /* Groupes d'options */
+        .radio-group, .activity-group {
+            margin: 10px 0;
+        }
 
-/* Style des boutons radio */
-input[type="radio"] {
-    margin-right: 5px;
-}
+        /* Boutons radio */
+        input[type="radio"] {
+            margin-right: 5px;
+        }
 
-/* Style des champs de saisie et des listes déroulantes */
-input[type="number"], select {
-    font-size: 1em;
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: 2px solid #A6B1E1;
-    box-sizing: border-box;
-    background-color: #F4EEFF;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
+        /* Champs de saisie et listes déroulantes */
+        input[type="number"], select {
+            font-size: 1em;
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 2px solid #A6B1E1;
+            box-sizing: border-box;
+            background-color: #F4EEFF;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
 
-/* Effet focus */
-input[type="number"]:focus, select:focus {
-    outline: none;
-    border-color: #424874;
-    box-shadow: 0 0 5px rgba(66, 72, 116, 0.3);
-}
+        /* Effet focus */
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: #424874;
+            box-shadow: 0 0 5px rgba(66, 72, 116, 0.3);
+        }
 
-/* Style des boutons */
-button {
-    font-size: 1.1em;
-    margin-top: 20px;
-    padding: 10px 15px;
-    background-color: #A6B1E1;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-}
+        /* Style des boutons */
+        button {
+            font-size: 1.1em;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #A6B1E1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
 
-/* Effet sur les boutons */
-button:hover {
-    background-color: #424874;
-}
+        /* Effet sur les boutons */
+        button:hover {
+            background-color: #424874;
+        }
 
-/* Style des résultats */
-.result {
-    margin-top: 20px;
-    font-weight: bold;
-    background-color: #F4EEFF;
-    padding: 15px;
-    border-radius: 5px;
-    text-align: left;
-    border: 1px solid #A6B1E1;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
-}
+        /* Style des résultats */
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            background-color: #F4EEFF;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: left;
+            border: 1px solid #A6B1E1;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+        }
 
-/* Mise en évidence des calories */
-.calories-highlight {
-    color: #A6B1E1;
-    font-weight: bold;
-}
+        /* Mise en évidence des calories */
+        .calories-highlight {
+            color: #A6B1E1;
+            font-weight: bold;
+        }
 
-/* Alignement des cartes de résultat */
-.result-row {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 20px;
-    gap: 20px;
-    flex-wrap: wrap;
-}
+        /* Alignement des cartes de résultat */
+        .result-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
 
-/* Style des cartes de résultat */
-.result-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    width: 100px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    margin-bottom: 15px;
-}
+        /* Style des cartes de résultat */
+        .result-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            width: 100px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
 
-.result-card:hover {
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-}
+        .result-card:hover {
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+        }
 
-/* Style des images dans les cartes */
-.result-card img {
-    width: 30px;
-    height: 30px;
-    margin-bottom: 10px;
-}
+        /* Style des images dans les cartes */
+        .result-card img {
+            width: 30px;
+            height: 30px;
+            margin-bottom: 10px;
+        }
 
-/* Style des textes dans les cartes */
-.result-card h3, .result-card p {
-    margin: 0;
-    font-size: 0.9em;
-    color: #424874;
-}
+        .result-card h3, .result-card p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #424874;
+        }
 
-/* Message d'erreur */
-.error {
-    color: red;
-    margin-top: 10px;
-    text-align: center;
-}
+        .error {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
 
-/* Texte explicatif */
-.explicatif {
-    font-size: 0.9em;
-    color: #666666;
-    margin: 5px 0 10px 30px;
-}
+        /* Texte explicatif */
+        .explicatif {
+            font-size: 0.9em;
+            color: #666666;
+            margin: 5px 0 10px 30px;
+        }
 
-/* Styles réactifs pour petits écrans */
-@media (max-width: 600px) {
-    .container1 {
-        max-width: 100%;
-        padding: 15px;
-        margin: 15px 0;
-    }
-    h1 {
-        font-size: 1.4em;
-    }
-    .result-card {
-        width: 80px;
-        padding: 8px;
-    }
-    button {
-        padding: 10px;
-    }
-}
+        /* Styles réactifs pour petits écrans */
+        @media (max-width: 600px) {
+            body {
+                font-size: 19.2px; /* Augmentation de 20% de la taille de base */
+            }
+        }
 
-/* Placeholders */
-.placeholder {
-    color: rgba(100, 100, 100, 0.5);
-    font-style: italic;
-    text-align: center;
-}
+        /* Placeholders */
+        .placeholder {
+            color: rgba(100, 100, 100, 0.5);
+            font-style: italic;
+            text-align: center;
+        }
 
-/* Style pour masquer le placeholder quand il y a du contenu */
-.result span.placeholder {
-    display: block;
-}
+        /* Style pour masquer le placeholder quand il y a du contenu */
+        .result span.placeholder {
+            display: block;
+        }
 
-.result:empty::before {
-    content: "Résultat ici";
-    font-style: italic;
-    color: rgba(100, 100, 100, 0.5);
-}
+        .result:empty::before {
+            content: "Résultat ici";
+            font-style: italic;
+            color: rgba(100, 100, 100, 0.5);
+        }
 
-/* Conteneur personnalisé pour ajuster l'espacement */
-.tdee-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
+        /* Conteneur personnalisé pour ajuster l'espacement */
+        .tdee-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
 
-/* Bouton TDEE avec marge ajustée */
-#calculTDEEButton {
-    margin-top: 0px;
-    margin-bottom: 10px;
-    padding: 12px 20px;
-    width: auto;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
+        /* Bouton TDEE */
+        #calculTDEEButton {
+            margin-top: 0px;
+            margin-bottom: 10px;
+            padding: 12px 20px;
+            width: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-/* Ajustement de la zone de résultat */
-#resultTDEE {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px dashed #A6B1E1;
-    background-color: #F4EEFF;
-    text-align: center;
-    border-radius: 5px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-    </style>    
+        /* Zone de résultat TDEE */
+        #resultTDEE {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px dashed #A6B1E1;
+            background-color: #F4EEFF;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
 </head>
 <body>
+
 
     <div class="container-wrapper">
         <h1>Calcul du taux de masse grasse et dépense énergétique journalière</h1>
