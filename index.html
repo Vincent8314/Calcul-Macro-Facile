@@ -183,6 +183,7 @@
             body {
                 font-size: 19.2px; /* Augmentation de 20% de la taille de base */
             }
+            
         }
 
         /* Placeholders */
@@ -195,6 +196,21 @@
         /* Style pour masquer le placeholder quand il y a du contenu */
         .result span.placeholder {
             display: block;
+        }
+        @media (max-width: 600px) {
+        .result-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px; /* Réduction du padding */
+            width: 80px; /* Réduction de la largeur */
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 10px; /* Réduction de l'espacement */
+            }
         }
 
         .result:empty::before {
